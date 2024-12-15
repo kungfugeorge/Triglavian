@@ -1,5 +1,3 @@
-import javax.swing.*;
-import java.awt.*;
 import java.io.*;
 import java.util.*;
 import java.util.List;
@@ -43,7 +41,7 @@ public class Main {
             System.exit(1);
         }
 
-        System.out.println(Arrays.deepToString(data.toArray()));
+//        System.out.println(Arrays.deepToString(data.toArray()));
 
         // ищем ближайших соседей
         List<List<Cord>> allNearestNeighbours = new ArrayList<>();
@@ -56,7 +54,7 @@ public class Main {
             if (neighbours.size() > nearestNeighbours + 1) {
                 neighbours = new ArrayList<>(neighbours.subList(1, nearestNeighbours + 1));
             } else {
-                System.out.println("Not enough objects for element " + i);
+                System.out.println("Недостаточно объектов для элемента №"+ i);
                 System.exit(1);
             }
             allNearestNeighbours.add(neighbours);
@@ -74,7 +72,7 @@ public class Main {
             double S = 0.5 * Math.abs(A[0] * (B[1] - C[1]) + B[0] * (C[1] - A[1]) + C[0] * (A[1] - B[1]));
 
             if (S == 0) {
-                System.out.println("Triangle " + count + " has zero area!");
+                System.out.println("Треугольник для объекта №" + count + " имеет нулевую площадь!");
                 count++;
                 continue;
             }
@@ -124,17 +122,20 @@ public class Main {
         }
 
         // рисуем
-        SwingUtilities.invokeLater(()->
-
-        {
-            JFrame frame = new JFrame("Triglavian Method");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.add(new Vizualizator(allGenerated));
-            Toolkit toolkit = Toolkit.getDefaultToolkit();
-            Dimension dimension = toolkit.getScreenSize();
-            frame.setBounds(dimension.width / 2 - 500, dimension.height / 2 - 300, 1000, 600);
-            frame.setVisible(true);
-        });
+//        for (TriangleAndDot elem : allGenerated) {
+//            SwingUtilities.invokeLater(() ->
+//
+//            {
+//                JFrame frame = new JFrame("Triglavian Method");
+//                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                frame.add(new Vizualizator(elem));
+////            frame.add(new Vizualizator(allGenerated));
+//                Toolkit toolkit = Toolkit.getDefaultToolkit();
+//                Dimension dimension = toolkit.getScreenSize();
+//                frame.setBounds(dimension.width / 2 - 500, dimension.height / 2 - 300, 1000, 600);
+//                frame.setVisible(true);
+//            });
+//        }
     }
 
     private static List<Cord> getAllNeighboursForCurrentElement(double[] currentElement, List<double[]> data) {
