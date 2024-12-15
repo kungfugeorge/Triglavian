@@ -106,33 +106,77 @@ public class Main {
         // заводим список под синтезированные объекты
         List<TriangleAndDot> allGenerated = new ArrayList<>();
 
-        for (int i = 0; i < allNearestNeighbours.size(); i++) {
+        int count = 0; // на всякий пожарный
+        for (List<Cord> triangle : allNearestNeighbours) {
+            double[] A = triangle.get(0).getElement();
+            double[] B = triangle.get(1).getElement();
+            double[] C = triangle.get(2).getElement();
 
+            // если площадь = 0, ругаемся и берем след. треугольник
+            // S = 1/2 * [x1(y2-y3) + x2(y3-y1) + x3(y1-y2)]
+            double S = 0.5 * Math.abs(A[0] * (B[1] - C[1]) + B[0] * (C[1] - A[1]) + C[0] * (A[1] - B[1]));
 
-            //STOP
+            if (0 == S) {
+                System.out.println("Площадь треугольника " + count + "-го элемента равна 0!!!");
+                count++;
+                continue;
+            }
+            count++;
 
+            Random random = new Random(System.currentTimeMillis());
+
+            double r1 = random.nextDouble();
+            double r2 = random.nextDouble();
+
+            if((r1 + r2) > 1.0) {
+                r1 = 1.0 - r1;
+                r2 = 1.0 - r2;
+            }
+
+            double l1 = 1.0 - r1 - r2;
+            double l2 = r1;
+            double l3 = r2;
+
+            TriangleAndDot triangleAndDot = new TriangleAndDot();
+            List<double[]> currentTriangle = new ArrayList<>();
+            currentTriangle.add(A);
+            currentTriangle.add(B);
+            currentTriangle.add(C);
+
+            triangleAndDot.setTriangle(currentTriangle);
+
+            double newX = l1*A[0] + l2*B[0] + l3*C[0];
+            double newY = l1*A[1] + l2*B[1] + l3*C[1];
+            double[] dot = {newX, newY};
+            triangleAndDot.setDot(dot);
+            System.out.println(triangleAndDot);
+            allGenerated.add(triangleAndDot);
         }
 
         // записываем элементы в файл
-        String savePath = "F:\\ВолГУ\\MLCourse\\Синтез данных\\1\\task3v2-1000.csv";
+        String savePath = "F:\\ВолГУ\\MLCourse\\Синтез данных\\1\\task3v2-10000.csv";
         BufferedWriter bw = null;
         try {
             bw = new BufferedWriter(new FileWriter(savePath));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        for (double[] element : allGenerated) {
+        for (TriangleAndDot element : allGenerated) {
             StringBuilder s = new StringBuilder();
-            for (int i = 0; i < element.length; i++) {
-                s.append(element[i]).append(";");
+
+            for(double[] triangle : element.getTriangle()) {
+                s.append(triangle[0]).append(",").append(triangle[1]).append(";");
             }
-            s.deleteCharAt(s.length() - 1);
+
+            double[] dot = element.getDot();
+            s.append(dot[0]).append(",").append(dot[1]);
+
             String t = s.toString();
-            String replace = t.replace(".", ",");
-//            System.out.println(replace);
+//            String replace = t.replace(".", ",");
+            System.out.println(t);
             try {
 
-                bw.write(replace);
+                bw.write(t);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
