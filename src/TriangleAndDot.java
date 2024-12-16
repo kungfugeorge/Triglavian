@@ -32,12 +32,12 @@ public class TriangleAndDot {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("TriangleAndDot{");
+        sb.append("TriangleAndDot: \n");
         for(int i = 0; i <= 2; i++) {
             double[] temp = triangle.get(i);
             sb.append("Corner ").append(i).append(" :").append(Arrays.toString(temp)).append("\n");
         }
-        sb.append(", dot=").append(Arrays.toString(dot)).append("}");
+        sb.append("dot = ").append(Arrays.toString(dot));
 
         return sb.toString();
     }

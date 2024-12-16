@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Path2D;
-import java.util.List;
 
 public class Vizualizator extends JPanel {
     private TriangleAndDot triangleAndDotList;

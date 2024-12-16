@@ -12,7 +12,7 @@ public class Main {
         // String path = scanner.nextLine();
 
         if (!new File(path).canRead()) {
-            System.out.println("Can't reach the file. Please check the path!");
+            System.out.println("Проверьте путь к файлу!");
             System.exit(1);
         }
 
@@ -38,10 +38,11 @@ public class Main {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Какая-то ошибка внутри файла");
             System.exit(1);
         }
 
-//        System.out.println(Arrays.deepToString(data.toArray()));
+//        System.out.println(Arrays.deepToString(data.toArray())); // чекнуть что внутри
 
         // ищем ближайших соседей
         List<List<Cord>> allNearestNeighbours = new ArrayList<>();
@@ -55,7 +56,7 @@ public class Main {
                 neighbours = new ArrayList<>(neighbours.subList(1, nearestNeighbours + 1));
             } else {
                 System.out.println("Недостаточно объектов для элемента №"+ i);
-                System.exit(1);
+                continue;
             }
             allNearestNeighbours.add(neighbours);
         }
@@ -78,7 +79,7 @@ public class Main {
             }
             count++;
 
-            Random random = new Random();
+            Random random = new Random(System.currentTimeMillis());
             double r1 = random.nextDouble();
             double r2 = random.nextDouble();
 
